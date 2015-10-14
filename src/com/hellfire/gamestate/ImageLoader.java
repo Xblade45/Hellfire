@@ -14,18 +14,19 @@ import javax.imageio.ImageIO;
  *
  * @author Xblade45
  */
-public class SpriteSheetLoader {
+public class ImageLoader {
     
-    public static BufferedImage loadSpriteSheet(String folder, String inputFile){
+    
+    public static BufferedImage load(String folder, String inputFile){
         
-        BufferedImage sprite = null;
+        BufferedImage img = null;
         
         try{
-            sprite = ImageIO.read(new File("resources/" + folder + "/" + inputFile + ".png"));
+            img = ImageIO.read(new File("resources/" + folder + "/" + inputFile + ".png"));
         }catch(IOException e){
             e.printStackTrace();
         }
-        return sprite;
+        return img;
     }
     
     public static BufferedImage[] getAnimationTab(BufferedImage img, int frames){
