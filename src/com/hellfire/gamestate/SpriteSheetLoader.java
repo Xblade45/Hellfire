@@ -28,16 +28,16 @@ public class SpriteSheetLoader {
         return sprite;
     }
     
-    public static BufferedImage[] getAnimationTab(BufferedImage img){
+    public static BufferedImage[] getAnimationTab(BufferedImage img, int frames){
         
-        int tileSize = img.getHeight();
+        int tileHeight = img.getHeight();
         
-        int frames = img.getWidth() / tileSize;
+        int tileWidth = img.getWidth() / frames;
         
         BufferedImage[] animation = new BufferedImage[frames];
         
         for(int i=0; i<frames; i++)
-            animation[i] = img.getSubimage(i*tileSize, 0, tileSize, tileSize);
+            animation[i] = img.getSubimage(i*tileWidth, 0, tileWidth, tileHeight);
         
         return animation;
     }

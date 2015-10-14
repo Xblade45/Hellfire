@@ -22,7 +22,8 @@ import javax.swing.JPanel;
  * @author Xblade45
  */
 public class Panel extends JPanel implements GameEngine, MouseListener, KeyListener{
-
+    
+    
     GameStateManager gsm;
     
     
@@ -42,6 +43,7 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
     
     public Panel(){
     
+        super();
         run();
     }
 
