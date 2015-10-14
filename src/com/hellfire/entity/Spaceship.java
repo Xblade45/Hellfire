@@ -9,17 +9,25 @@ import com.hellfire.gamestate.GameEngine;
 import com.hellfire.gamestate.SpriteSheetLoader;
 import com.hellfire.main.Panel;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  *
  * @author Xblade45
  */
-public class Spaceship implements GameEngine {
+public class Spaceship implements GameEngine, KeyListener {
     
     Animation shipAnimation;
     
-    int posX;
-    int posY;
+    private int posX;
+    private int posY;
+    
+    private double dx;
+    private double dy;
+    
+    private double speed;
+    
     
     public Spaceship(String folder, String file, int frames){
         
@@ -31,6 +39,9 @@ public class Spaceship implements GameEngine {
         shipAnimation = new Animation();
         loadAnimation(shipAnimation, folder, file, frames);
         
+        this.speed = 10;
+        this.dx = 0;
+        this.dy = 0;
         this.posX = Panel.WIDTH*Panel.SCALE /2 - shipAnimation.getImage().getWidth()/2;
         this.posY = Panel.HEIGHT*Panel.SCALE /2 - shipAnimation.getImage().getHeight()/2;
     }
@@ -39,12 +50,17 @@ public class Spaceship implements GameEngine {
     @Override
     public void update() {
         
-        shipAnimation.update();
+        if(shipAnimation != null){
+            shipAnimation.update();
+            posX += dx*speed;
+            posY += dy*speed;
+        }
     }
     @Override
     public void draw(Graphics g) {
         
-        g.drawImage(shipAnimation.getImage(), posX, posY, null);
+        if(shipAnimation != null)
+            g.drawImage(shipAnimation.getImage(), posX, posY, null);
     }
     
     public void loadAnimation(Animation a, String folder, String file, int frames){
@@ -55,5 +71,44 @@ public class Spaceship implements GameEngine {
 
     @Override
     public void init() {}
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
+    @Override
+    public void keyPressed(KeyEvent e) {
+        
+        int key = e.getKeyCode();
+        
+        if(key == KeyEvent.VK_A){
+            this.dx = -1;
+        }
+        if(key == KeyEvent.VK_D){
+            this.dx = 1;
+        }
+        if(key == KeyEvent.VK_W){
+            this.dy = -1;
+        }
+        if(key == KeyEvent.VK_S){
+            this.dy = 1;
+        }
+    }
+    @Override
+    public void keyReleased(KeyEvent e) {
+    
+        int key = e.getKeyCode();
+        
+        if(key == KeyEvent.VK_A){
+            this.dx = 0;
+        }
+        if(key == KeyEvent.VK_D){
+            this.dx = 0;
+        }
+        if(key == KeyEvent.VK_W){
+            this.dy = 0;
+        }
+        if(key == KeyEvent.VK_S){
+            this.dy = 0;
+        }
+    }
     
 }

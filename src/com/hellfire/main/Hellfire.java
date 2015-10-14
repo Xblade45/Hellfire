@@ -5,26 +5,45 @@
  */
 package com.hellfire.main;
 
+import java.awt.EventQueue;
 import javax.swing.JFrame;
 
 /**
  *
  * @author Xblade45
  */
-public class Hellfire {
+public class Hellfire extends JFrame{
 
+    
+    
+    public Hellfire(){
+        
+        initUI();
+    }
+    
+    private void initUI(){
+        add(new Panel());
+        
+        setResizable(false);
+        pack();
+        
+        setTitle("Hellfire");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+    }
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Panel panel = new Panel();
         
-        JFrame frame = new JFrame();
-        frame.setContentPane(panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        frame.pack();
-        frame.setVisible(true);
+        EventQueue.invokeLater(new Runnable(){
+        
+            @Override
+            public void run(){
+                Hellfire game = new Hellfire();
+                game.setVisible(true);
+            }
+        });
     }
-    
 }
