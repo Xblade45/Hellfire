@@ -25,6 +25,7 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
 
     GameStateManager gsm;
     
+    
     private boolean isRunning;
     
     public static final int WIDTH = 512;
