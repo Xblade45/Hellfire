@@ -34,6 +34,12 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
     public static int HEIGHT = WIDTH / 16 * 9;
     public static int SCALE = 2;
     
+    public static boolean isUpPressed = false;
+    public static boolean isDownPressed = false;
+    public static boolean isLeftPressed = false;
+    public static boolean isRightPressed = false;
+    public static boolean isFirePressed = false;
+    
     private final int DELAY = 16;
     
     private Thread game;
@@ -74,9 +80,7 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
             sleep = DELAY - timeDiff;
             
             if(sleep < 0)
-                sleep = 16;
-            
-            System.out.println(1000/sleep);//FPS
+                sleep = DELAY;
             
             try{
                 Thread.sleep(sleep);
@@ -104,6 +108,7 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         draw(g);
+        Toolkit.getDefaultToolkit().sync();
     }
     
     @Override
@@ -111,20 +116,17 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
         
         Graphics2D g2d = (Graphics2D) g;
         
-        RenderingHints rh
-        = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
+        RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
+                                               RenderingHints.VALUE_ANTIALIAS_ON);
 
         rh.put(RenderingHints.KEY_RENDERING,
-                RenderingHints.VALUE_RENDER_QUALITY);
+               RenderingHints.VALUE_RENDER_QUALITY);
 
         g2d.setRenderingHints(rh);
-        
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0, 0, getWidth(), getHeight());
-        gsm.draw(g2d);
         
-        Toolkit.getDefaultToolkit().sync();
+        gsm.draw(g);
     }
 
     @Override
@@ -142,13 +144,45 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
     public void mouseExited(MouseEvent mouseEvent) {}
     @Override
     public void keyPressed(KeyEvent e) {
-    
-        gsm.keyPressed(e);
+        switch(e.getKeyCode()){
+        
+            case KeyEvent.VK_W:
+                isUpPressed = true;
+            break;
+            case KeyEvent.VK_S:
+                isDownPressed = true;
+            break;
+            case KeyEvent.VK_A:
+                isLeftPressed = true;
+            break;
+            case KeyEvent.VK_D:
+                isRightPressed = true;
+            break;
+            case KeyEvent.VK_SPACE:
+                isFirePressed = true;
+            break;
+        }
     }
     @Override
     public void keyReleased(KeyEvent e) {
-    
-        gsm.keyReleased(e);
+        switch(e.getKeyCode()){
+        
+            case KeyEvent.VK_W:
+                isUpPressed = false;
+            break;
+            case KeyEvent.VK_S:
+                isDownPressed = false;
+            break;
+            case KeyEvent.VK_A:
+                isLeftPressed = false;
+            break;
+            case KeyEvent.VK_D:
+                isRightPressed = false;
+            break;
+            case KeyEvent.VK_SPACE:
+                isFirePressed = false;
+            break;
+        }
     }
     @Override
     public void keyTyped(KeyEvent e) {}
