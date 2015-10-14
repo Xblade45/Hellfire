@@ -22,7 +22,6 @@ public class Hellfire extends JFrame{
     }
     
     private void initUI(){
-        
         add(new Panel());
         
         setResizable(false);

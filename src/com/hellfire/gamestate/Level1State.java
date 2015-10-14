@@ -8,6 +8,8 @@ package com.hellfire.gamestate;
 import com.hellfire.entity.Spaceship;
 import com.hellfire.level.Background;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 /**
  *
@@ -49,7 +51,20 @@ public class Level1State extends GameState{
 
     @Override
     public void update() {
-        
+    
         player.update();
     }
+    
+    @Override
+    public void keyPressed(KeyEvent e) {
+        player.keyPressed(e);
+    }
+    
+    @Override
+    public void keyReleased(KeyEvent e) {
+        player.keyReleased(e);
+    }
+    
+    @Override
+    public void mousePressed(MouseEvent me) {}
 }
