@@ -9,6 +9,7 @@ import com.hellfire.gamestate.GameEngine;
 import com.hellfire.gamestate.SpriteSheetLoader;
 import com.hellfire.main.Panel;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -59,8 +60,10 @@ public class Spaceship implements GameEngine, KeyListener {
     @Override
     public void draw(Graphics g) {
         
+        Graphics2D g2d = (Graphics2D) g;
+        
         if(shipAnimation != null)
-            g.drawImage(shipAnimation.getImage(), posX, posY, null);
+            g2d.drawImage(shipAnimation.getImage(), posX, posY, null);
     }
     
     public void loadAnimation(Animation a, String folder, String file, int frames){
