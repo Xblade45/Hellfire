@@ -13,7 +13,6 @@ import java.awt.image.BufferedImage;
  */
 public class Animation {
     
-    
     private BufferedImage[] frames;
     private int currentFrame;
     
@@ -22,12 +21,14 @@ public class Animation {
     
     private boolean playedOnce;
     
-    public Animation(){
+    //constructor
+    public Animation(BufferedImage[] frames){
+        setFrames(frames);
         playedOnce = false;
     }
     
-    public void setFrames(BufferedImage[] frames){
-        
+    //methods
+    private void setFrames(BufferedImage[] frames){
         this.frames = frames;
         currentFrame = 0;
         playedOnce = false;

@@ -30,15 +30,16 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
     
     private boolean isRunning;
     
-    public static final int WIDTH = 512;
-    public static int HEIGHT = WIDTH / 16 * 9;
-    public static int SCALE = 2;
+    private static final int P_WIDTH = 512;
+    private static final int P_HEIGHT = P_WIDTH / 16 * 9;
+    private static final int SCALE = 2;
     
     public static boolean isUpPressed = false;
     public static boolean isDownPressed = false;
     public static boolean isLeftPressed = false;
     public static boolean isRightPressed = false;
     public static boolean isFirePressed = false;
+    public static boolean isChangePressed = false;
     
     private final int DELAY = 16;
     
@@ -47,6 +48,14 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
     public Panel(){
     
         init();
+    }
+    
+    public static final int getP_WIDTH(){
+        return P_WIDTH*SCALE;
+    }
+    
+    public static final int getP_HEIGHT(){
+        return P_HEIGHT*SCALE;
     }
     
     @Override
@@ -58,7 +67,7 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
         this.addMouseListener(this);
         this.addKeyListener(this);
         
-        setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
+        setPreferredSize(new Dimension(getP_WIDTH(), getP_HEIGHT()));
         setDoubleBuffered(true);
         setFocusable(true);
         setVisible(true);
@@ -161,6 +170,9 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
             case KeyEvent.VK_SPACE:
                 isFirePressed = true;
             break;
+            case KeyEvent.VK_E:
+                isChangePressed = true;
+            break;
         }
     }
     @Override
@@ -181,6 +193,9 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
             break;
             case KeyEvent.VK_SPACE:
                 isFirePressed = false;
+            break;
+            case KeyEvent.VK_E:
+                isChangePressed = false;
             break;
         }
     }

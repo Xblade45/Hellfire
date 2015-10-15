@@ -18,7 +18,6 @@ import java.awt.event.MouseListener;
 public abstract class GameState implements GameEngine, MouseListener, KeyListener {
     
     protected GameStateManager gsm;
-
     
     @Override
     public void init() {}

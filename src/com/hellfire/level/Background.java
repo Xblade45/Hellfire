@@ -19,7 +19,13 @@ public class Background implements GameEngine {
     
     private BufferedImage image;
     
-    public Background(){
+    private int width;
+    private int height;
+    
+    public Background(int w, int h){
+        
+        this.width = w;
+        this.height = h;
         
         init();
     }
@@ -27,7 +33,7 @@ public class Background implements GameEngine {
     @Override
     public final void init() {
     
-        //image = SpriteSheetLoader.loadSpriteSheet("Backgrounds", "bg1");
+        //image = SpriteSheetLoader.loadSpriteSheet("Backgrounds", "Background1");
     }
 
     @Override
@@ -40,7 +46,7 @@ public class Background implements GameEngine {
     public void draw(Graphics g) {
     
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, Panel.WIDTH*Panel.SCALE, Panel.HEIGHT*Panel.SCALE);
+        g.fillRect(0, 0, width, height);
         //g.drawImage(image, Panel.WIDTH, Panel.HEIGHT, null);
     }
     

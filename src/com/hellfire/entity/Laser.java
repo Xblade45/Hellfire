@@ -9,110 +9,112 @@ import com.hellfire.gamestate.GameEngine;
 import com.hellfire.gamestate.ImageLoader;
 import com.hellfire.main.Panel;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
 
 /**
  *
  * @author Xblade45
  */
-public class Laser implements GameEngine {
-    
-    private int posX;
-    private int posY;
+public class Laser extends Sprite implements GameEngine {
     
     private double dx;
     private double dy;
     
     private double speed;
+    private int rotation;
     
-    private int laserType;
+    private int currentDirection;
     
-    private BufferedImage laserImg;
+    public static final int NORTH = 0;
+    public static final int SOUTH = 1;
+    public static final int EAST = 2;
+    public static final int WEST = 3;
+    public static final int NW = 4;
+    public static final int NE = 5;
+    public static final int SW = 6;
+    public static final int SE = 7;
     
     //constructor
-    public Laser(String folder, int laserType, Spaceship s){
+    public Laser(int x, int y, int direction){
+        super(x, y);
         
-        init(folder, laserType, s);
-    }
-
-    //getter
-    public int getPosX() {
-        return posX;
-    }
-    public int getPosY() {
-        return posY;
-    }
-    public BufferedImage getLaserImg() {
-        return laserImg;
+        this.currentDirection = direction;
+        
+        init();
     }
 
     //methods
-    public final void init(String folder, int laserType, Spaceship s) {
+    @Override
+    public final void init() {
+
+        this.speed = 20;
+        this.rotation = 0;
         
-        this.laserType = laserType;
-        this.dx = 0;
-        this.dy = 0;
-        this.speed = 15;
-        this.posX = s.getPosX() + s.getWidth();
-        this.posY = s.getPosY() + s.getHeight()/2;
-        
-        laserImg = ImageLoader.load(folder, getLaserFile(laserType));
+        setVector();
+        image = ImageLoader.load("Lasers", "laser1");
     }
     
     public boolean isVisible(){
         
-        return posX < Panel.WIDTH*Panel.SCALE 
+        return posX < Panel.getP_WIDTH()
             && posX > 0
             && posY > 0 
-            && posY < Panel.HEIGHT*Panel.SCALE;
+            && posY < Panel.getP_HEIGHT();
     }
     
-    private String getLaserFile(int type){
+    private void setVector(){
         
-        String result = "";
+        switch(currentDirection){
         
-        switch(type){
-        
-            case Spaceship.FRONT:
-                result = "laserFront";
+            case NORTH:
+                dx = 0;
+                dy = -1;
             break;
-            case Spaceship.REAR:
-                result = "laserRear";
+            case SOUTH:
+                dx = 0;
+                dy = 1;
             break;
-            case Spaceship.UPDOWN:
-                result = "laserUpDown";
+            case EAST:
+                dx = 1;
+                dy = 0;
             break;
-            case Spaceship.DIAG:
-                result = "laserDiag";
+            case WEST:
+                dx = -1;
+                dy = 0;
+            break;
+            case NW:
+                dx = -1;
+                dy = -1;
+            break;
+            case NE:
+                dx = 1;
+                dy = -1;
+            break;
+            case SW:
+                dx = -1;
+                dy = 1;
+            break;
+            case SE:
+                dx = 1;
+                dy = 1;
             break;
         }
-        return result;
     }
     
     @Override
     public void run() {}
     @Override
     public void update() {
-    
-        if(laserType == Spaceship.FRONT){
-            dx = 1;
-        }
-        if(laserType == Spaceship.REAR){
-        }
-        if(laserType == Spaceship.UPDOWN){
-        }
-        if(laserType == Spaceship.DIAG){
-        }
         
         posX += dx*speed;
         posY += dy*speed;
     }
     @Override
     public void draw(Graphics g) {
-    
-        g.drawImage(laserImg, posX, posX, null);
+        
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.rotate(Math.toRadians(rotation));
+        g2d.drawImage(image, posX, posX, null);
     }
-    @Override
-    public void init() {}
     
 }

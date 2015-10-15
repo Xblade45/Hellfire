@@ -7,6 +7,7 @@ package com.hellfire.gamestate;
 
 import com.hellfire.entity.Spaceship;
 import com.hellfire.level.Background;
+import com.hellfire.main.Panel;
 import java.awt.Graphics;
 
 /**
@@ -19,6 +20,9 @@ public class Level1State extends GameState{
     
     Spaceship player;
     
+    private int width = Panel.getP_WIDTH();
+    private int height = Panel.getP_HEIGHT();
+    
     
     public Level1State(GameStateManager gsm){
         
@@ -30,26 +34,21 @@ public class Level1State extends GameState{
     @Override
     public final void init() {
         
-        //Background
-        background = new Background();
-        
-        //player
-        player = new Spaceship("Spaceships", "Spaceship1", 5);
+        background = new Background(width, height);
+        player = new Spaceship(width/2, height/2);//Center of panel
     }
     
     @Override
     public void draw(Graphics g) {
         
-        //draw Background
         background.draw(g);
-        
-        //draw Player
         player.draw(g);
     }
 
     @Override
     public void update() {
         
+        background.update();
         player.update();
     }
 }
