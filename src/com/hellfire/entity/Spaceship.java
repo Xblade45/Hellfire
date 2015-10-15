@@ -109,7 +109,6 @@ public class Spaceship extends Sprite implements GameEngine{
     public void draw(Graphics g) {
         
         Graphics2D g2d = (Graphics2D) g;
-        
         g2d.drawImage(shipAnimation.getImage(), posX, posY, null);
         
         for(int i=0; i<lasers.size(); i++){
@@ -117,7 +116,7 @@ public class Spaceship extends Sprite implements GameEngine{
             Laser l = (Laser) lasers.get(i);
             
             if(l.isVisible())
-                g2d.drawImage(l.getImage(), l.getPosX(), l.getPosY(), null);
+                l.draw(g);
             else
                 lasers.remove(i);
         }
@@ -130,18 +129,19 @@ public class Spaceship extends Sprite implements GameEngine{
         if(currentLaserType == REAR)
             lasers.add(new Laser(posX -LASERPADDING, posY +height/2, Laser.WEST));
         if(currentLaserType == UPDOWN){
-            lasers.add(new Laser(posX +width/2 -15, posY, Laser.NORTH));
-            lasers.add(new Laser(posX +width/2 -15, posY +height, Laser.SOUTH));
+            lasers.add(new Laser(posX +width/2, posY -20, Laser.NORTH));
+            lasers.add(new Laser(posX +width/2, posY +height -10, Laser.SOUTH));
         }
         if(currentLaserType == DIAG){
-            lasers.add(new Laser(posX -15, posY, Laser.NW));
-            lasers.add(new Laser(posX -15 + width, posY, Laser.NE));
-            lasers.add(new Laser(posX -15, posY +height, Laser.SW));
-            lasers.add(new Laser(posX -15 +width, posY +height, Laser.SE));
+            lasers.add(new Laser(posX, posY -10, Laser.NW));
+            lasers.add(new Laser(posX + width, posY -10, Laser.NE));
+            lasers.add(new Laser(posX, posY +height -20, Laser.SW));
+            lasers.add(new Laser(posX +width -10, posY +height -20, Laser.SE));
         }
     }
     
     private void changeLaser(){
+        
         currentLaserType++;
         if(currentLaserType == DIAG+1)
             currentLaserType = FRONT;
