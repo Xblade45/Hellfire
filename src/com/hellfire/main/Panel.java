@@ -10,8 +10,6 @@ import com.hellfire.gamestate.GameStateManager;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -123,17 +121,8 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
     @Override
     public void draw(Graphics g) {
         
-        Graphics2D g2d = (Graphics2D) g;
-        
-        RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
-                                               RenderingHints.VALUE_ANTIALIAS_ON);
-
-        rh.put(RenderingHints.KEY_RENDERING,
-               RenderingHints.VALUE_RENDER_QUALITY);
-
-        g2d.setRenderingHints(rh);
-        g2d.setColor(Color.BLACK);
-        g2d.fillRect(0, 0, getWidth(), getHeight());
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, getWidth(), getHeight());
         
         gsm.draw(g);
     }
