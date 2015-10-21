@@ -6,8 +6,7 @@
 package com.hellfire.level;
 
 import com.hellfire.gamestate.GameEngine;
-import com.hellfire.main.Panel;
-import java.awt.Color;
+import com.hellfire.gamestate.ImageLoader;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -22,6 +21,17 @@ public class Background implements GameEngine {
     private int width;
     private int height;
     
+    //Background position
+    private int posX;
+    private int posY;
+    
+    //Vector
+    private int dx;
+    private int dy;
+    
+    //Speed
+    private int scrollSpeed;
+    
     public Background(int w, int h){
         
         this.width = w;
@@ -33,21 +43,21 @@ public class Background implements GameEngine {
     @Override
     public final void init() {
     
-        //image = SpriteSheetLoader.loadSpriteSheet("Backgrounds", "Background1");
+        image = ImageLoader.load("Backgrounds", "black");
     }
 
     @Override
     public void run() {}
 
     @Override
-    public void update() {}
+    public void update() {
+    
+        
+    }
 
     @Override
     public void draw(Graphics g) {
-    
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, width, height);
-        //g.drawImage(image, Panel.WIDTH, Panel.HEIGHT, null);
+
     }
     
 }

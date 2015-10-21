@@ -17,12 +17,12 @@ import javax.imageio.ImageIO;
 public class ImageLoader {
     
     
-    public static BufferedImage load(String folder, String inputFile){
+    public static BufferedImage load(String folder, String file){
         
         BufferedImage img = null;
         
         try{
-            img = ImageIO.read(new File("resources/" + folder + "/" + inputFile + ".png"));
+            img = ImageIO.read(new File("resources/" + folder + "/" + file + ".png"));
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -30,10 +30,10 @@ public class ImageLoader {
     }
     
     public static BufferedImage[] getAnimationTab(BufferedImage img, int frames){
+
+        int tileWidth = img.getWidth() / frames;
         
         int tileHeight = img.getHeight();
-        
-        int tileWidth = img.getWidth() / frames;
         
         BufferedImage[] animation = new BufferedImage[frames];
         
@@ -41,6 +41,23 @@ public class ImageLoader {
             animation[i] = img.getSubimage(i*tileWidth, 0, tileWidth, tileHeight);
         
         return animation;
+    }
+    
+    public static BufferedImage[][] getTileTab(BufferedImage img, int tileSize){
+
+        int numCol = img.getWidth() / tileSize;
+        int numRow = img.getHeight() / tileSize;
+        
+        BufferedImage[][] tileTab = new BufferedImage[numCol][numRow];
+        
+        for(int j=0; j<numRow; j++){// Y axis
+            
+            for(int i=0; i<numCol; i++){// X axis
+                
+                tileTab[i][j] = img.getSubimage(i, j, tileSize, tileSize);
+            }
+        }
+        return tileTab;
     }
 }
 
