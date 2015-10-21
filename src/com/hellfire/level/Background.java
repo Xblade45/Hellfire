@@ -18,9 +18,6 @@ public class Background implements GameEngine {
     
     private BufferedImage image;
     
-    private int width;
-    private int height;
-    
     //Background position
     private int posX;
     private int posY;
@@ -30,20 +27,35 @@ public class Background implements GameEngine {
     private int dy;
     
     //Speed
-    private int scrollSpeed;
+    private double scrollSpeed;
     
-    public Background(int w, int h){
+    //Constructor
+    public Background(String file, double scrollSpeed){
         
-        this.width = w;
-        this.height = h;
+        this.scrollSpeed = scrollSpeed;
+        
+        image = ImageLoader.load("Backgrounds", file);
         
         init();
     }
+    
+    //Accessors
+    public void setDx(int dx) {
+        this.dx = dx;
+    }
 
+    public void setDy(int dy) {
+        this.dy = dy;
+    }
+    
+    //Methods
     @Override
     public final void init() {
-    
-        image = ImageLoader.load("Backgrounds", "black");
+        
+        this.dx = -1;
+        this.dy = 0;
+        this.posX = 0;
+        this.posY = 0;
     }
 
     @Override
@@ -51,13 +63,21 @@ public class Background implements GameEngine {
 
     @Override
     public void update() {
-    
         
+        posX += dx*scrollSpeed;
+        posY += dy*scrollSpeed;
     }
 
     @Override
     public void draw(Graphics g) {
-
+        
+        g.drawImage(image, posX, posY, null);
+        
+        if(posX < 0)
+            g.drawImage(image, posX+image.getWidth(), posY, null);
+        
+        if(posX < -image.getWidth())
+            posX = 0;
     }
     
 }

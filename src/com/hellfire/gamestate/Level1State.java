@@ -17,12 +17,9 @@ import java.awt.Graphics;
 public class Level1State extends GameState{
     
     Background background;
-    
     Spaceship player;
     
-    private int width = Panel.getP_WIDTH();
-    private int height = Panel.getP_HEIGHT();
-    
+    private final double SCROLL = 5;
     
     public Level1State(GameStateManager gsm){
         
@@ -34,8 +31,8 @@ public class Level1State extends GameState{
     @Override
     public final void init() {
         
-        background = new Background(width, height);
-        player = new Spaceship(width/2, height/2);//Center of panel
+        background = new Background("background1", SCROLL);
+        player = new Spaceship(Panel.getP_WIDTH()/2, Panel.getP_HEIGHT()/2);//Center of panel
     }
     
     @Override
