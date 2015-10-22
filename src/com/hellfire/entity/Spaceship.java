@@ -16,34 +16,34 @@ import java.util.ArrayList;
  *
  * @author Xblade45
  */
-public class Spaceship extends Sprite implements GameEngine{
-    
+public class Spaceship extends Sprite implements GameEngine {
+
     Animation shipAnimation;
     Animation fireAnimation;
-    
+
     private double dx;
     private double dy;
     private double speed;
-    
+
     private int currentLaserType;
     private ArrayList lasers;
-    
-    private final int BOUNDSPADDING = 10;
-    private final int LASERPADDING = 25;
-    
+
+    private final int BOUNDS_PADDING = 10;
+    private final int LASER_PADDING = 25;
+
     public static final int FRONT = 0;
     public static final int REAR = 1;
     public static final int UPDOWN = 2;
     public static final int DIAG = 3;
-    
+
     private int fireCounter;
-    private final int FIREDELAY = 5;
-    
-    private int changeCounter;
-    private final int CHANGEDELAY = 10;
-    
+    private final int FIRE_DELAY = 5;
+
+    private int laserSelectionCounter;
+    private final int LASER_SELECTION_DELAY = 10;
+
     //constructor
-    public Spaceship(int x, int y){
+    public Spaceship(int x, int y) {
         super(x, y);
         init();
     }
@@ -56,127 +56,148 @@ public class Spaceship extends Sprite implements GameEngine{
                 ImageLoader.getAnimationTab(
                         ImageLoader.load("Spaceships", "Spaceship1"), 5));
         shipAnimation.start(100);
-        
+
         this.width = shipAnimation.getImage().getWidth();
         this.height = shipAnimation.getImage().getHeight();
-        fireCounter = 0;
         
+        this.fireCounter = 0;
+        this.laserSelectionCounter = 0;
+
         lasers = new ArrayList();
-        currentLaserType = FRONT;
+        this.currentLaserType = FRONT;
 
         this.speed = 15;
         this.dx = 0;
         this.dy = 0;
-        this.posX -= width/2;
-        this.posY -= height/2;
+        this.posX -= width / 2;
+        this.posY -= height / 2;
     }
+
     @Override
-    public void run() {}
+    public void run() {
+    }
+
     @Override
     public void update() {
         
+        //update counters
         fireCounter++;
-        changeCounter++;
+        laserSelectionCounter++;
 
         //Input actions
         checkInput();
-        
+
         //restart counters
-        if(fireCounter > 60)
+        if (fireCounter > 60) {
             fireCounter = 0;
-        if(changeCounter > 60)
-            changeCounter = 0;
-        
+        }
+        if (laserSelectionCounter > 60) {
+            laserSelectionCounter = 0;
+        }
+
         //update position of Spaceship
         shipAnimation.update();
-        posX += dx*speed;
-        posY += dy*speed;
-        
+        posX += dx * speed;
+        posY += dy * speed;
+
         //Border Detection
         checkBounds();
-        
+
         //reset Vector
         this.dx = 0;
         this.dy = 0;
-        
+
         //Update each laser condition
-        for(Object l1 : lasers){
+        for (Object l1 : lasers) {
             Laser l = (Laser) l1;
-                l.update();
+            l.update();
         }
     }
+
     @Override
     public void draw(Graphics g) {
-        
+
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(shipAnimation.getImage(), posX, posY, null);
-        
-        for(int i=0; i<lasers.size(); i++){
-            
+
+        for (int i = 0; i < lasers.size(); i++) {
+
             Laser l = (Laser) lasers.get(i);
-            
-            if(l.isVisible())
+
+            if (l.isVisible()) {
                 l.draw(g);
-            else
+            } else {
                 lasers.remove(i);
+            }
         }
     }
-    
-    private void fire(){
-        
-        if(currentLaserType == FRONT)
-            lasers.add(new Laser(posX +width, posY +height/2, Laser.EAST));
-        if(currentLaserType == REAR)
-            lasers.add(new Laser(posX -LASERPADDING, posY +height/2, Laser.WEST));
-        if(currentLaserType == UPDOWN){
-            lasers.add(new Laser(posX +width/2, posY -20, Laser.NORTH));
-            lasers.add(new Laser(posX +width/2, posY +height -10, Laser.SOUTH));
+
+    private void fire() {
+
+        if (currentLaserType == FRONT) {
+            lasers.add(new Laser(posX + width, posY + height / 2, Laser.EAST));
         }
-        if(currentLaserType == DIAG){
-            lasers.add(new Laser(posX, posY -10, Laser.NW));
-            lasers.add(new Laser(posX + width, posY -10, Laser.NE));
-            lasers.add(new Laser(posX, posY +height -20, Laser.SW));
-            lasers.add(new Laser(posX +width -10, posY +height -20, Laser.SE));
+        if (currentLaserType == REAR) {
+            lasers.add(new Laser(posX - LASER_PADDING, posY + height / 2, Laser.WEST));
+        }
+        if (currentLaserType == UPDOWN) {
+            lasers.add(new Laser(posX + width / 2, posY - 20, Laser.NORTH));
+            lasers.add(new Laser(posX + width / 2, posY + height - 10, Laser.SOUTH));
+        }
+        if (currentLaserType == DIAG) {
+            lasers.add(new Laser(posX, posY - 10, Laser.NW));
+            lasers.add(new Laser(posX + width, posY - 10, Laser.NE));
+            lasers.add(new Laser(posX, posY + height - 20, Laser.SW));
+            lasers.add(new Laser(posX + width - 10, posY + height - 20, Laser.SE));
         }
     }
-    
-    private void changeLaser(){
-        
+
+    private void changeLaser() {
+
         currentLaserType++;
-        if(currentLaserType == DIAG+1)
+        if (currentLaserType == DIAG + 1) {
             currentLaserType = FRONT;
+        }
         System.out.println(currentLaserType);
     }
-    
-    private void checkBounds(){
-        
-        if(posX < 0 + BOUNDSPADDING)
-            posX = 0 + BOUNDSPADDING;
-        if(posY < 0 + BOUNDSPADDING)
-            posY = 0 + BOUNDSPADDING;
-        if(posY > Panel.getP_HEIGHT() - getHeight() - BOUNDSPADDING)
-            posY = Panel.getP_HEIGHT() - getHeight() - BOUNDSPADDING;
-        if(posX > Panel.getP_WIDTH() - getWidth() - BOUNDSPADDING)
-            posX = Panel.getP_WIDTH() - getWidth() - BOUNDSPADDING;
+
+    private void checkBounds() {
+
+        if (posX < 0 + BOUNDS_PADDING) {
+            posX = 0 + BOUNDS_PADDING;
+        }
+        if (posY < 0 + BOUNDS_PADDING) {
+            posY = 0 + BOUNDS_PADDING;
+        }
+        if (posY > Panel.getP_HEIGHT() - getHeight() - BOUNDS_PADDING) {
+            posY = Panel.getP_HEIGHT() - getHeight() - BOUNDS_PADDING;
+        }
+        if (posX > Panel.getP_WIDTH() - getWidth() - BOUNDS_PADDING) {
+            posX = Panel.getP_WIDTH() - getWidth() - BOUNDS_PADDING;
+        }
     }
-    
-    private void checkInput(){
-        
-        if(Panel.isUpPressed)
+
+    private void checkInput() {
+
+        if (Panel.isUpPressed) {
             this.dy = -1;
-        if(Panel.isDownPressed)
+        }
+        if (Panel.isDownPressed) {
             this.dy = 1;
-        if(Panel.isLeftPressed)
+        }
+        if (Panel.isLeftPressed) {
             this.dx = -0.85;
-        if(Panel.isRightPressed)
+        }
+        if (Panel.isRightPressed) {
             this.dx = 0.85;
-        if(Panel.isFirePressed && fireCounter > FIREDELAY){
+        }
+        if (Panel.isFirePressed && fireCounter > FIRE_DELAY) {
             fire();
             fireCounter = 0;
         }
-        if(Panel.isChangePressed && changeCounter > CHANGEDELAY){
+        if (Panel.isChangePressed && laserSelectionCounter > LASER_SELECTION_DELAY) {
             changeLaser();
-            changeCounter = 0;
+            laserSelectionCounter = 0;
         }
     }
 }

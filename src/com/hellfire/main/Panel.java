@@ -39,7 +39,7 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
     public static boolean isFirePressed = false;
     public static boolean isChangePressed = false;
     
-    private final int DELAY = 16;
+    private final int DELAY = 15;
     
     private Thread game;
     

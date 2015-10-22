@@ -74,8 +74,4 @@ public class Animation {
     public boolean hasPlayedOnce(){
         return playedOnce;
     }
-    
-    
-    
-
 }

@@ -16,10 +16,12 @@ import java.awt.Graphics;
  */
 public class Level1State extends GameState{
     
-    Background background;
+    Background backLayer;
+    Background middleLayer;
+    Background frontLayer;
     Spaceship player;
     
-    private final double SCROLL = 5;
+    private final double SCROLLSPEED_DEFAULT = 1.5;
     
     public Level1State(GameStateManager gsm){
         
@@ -31,21 +33,29 @@ public class Level1State extends GameState{
     @Override
     public final void init() {
         
-        background = new Background("background1", SCROLL);
+        backLayer = new Background("background1", SCROLLSPEED_DEFAULT);
+        middleLayer = new Background("background2", SCROLLSPEED_DEFAULT +1);
+        //frontLayer = new Background("background3", SCROLLSPEED_DEFAULT +2);
         player = new Spaceship(Panel.getP_WIDTH()/2, Panel.getP_HEIGHT()/2);//Center of panel
     }
     
     @Override
     public void draw(Graphics g) {
         
-        background.draw(g);
+        backLayer.draw(g);
+        middleLayer.draw(g);
+        //frontLayer.draw(g);
+        
         player.draw(g);
     }
 
     @Override
     public void update() {
         
-        background.update();
+        backLayer.update();
+        middleLayer.update();
+        //frontLayer.update();
+        
         player.update();
     }
 }

@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
  *
  * @author Xblade45
  */
-public class Sprite {
+public abstract class Sprite {
     
     protected int posX;
     protected int posY;
