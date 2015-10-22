@@ -6,7 +6,6 @@
 package com.hellfire.gamestate;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
@@ -22,7 +21,7 @@ public class ImageLoader {
         BufferedImage img = null;
         
         try{
-            img = ImageIO.read(new File("resources/" + folder + "/" + file + ".png"));
+            img = ImageIO.read(ImageLoader.class.getClassLoader().getResource(folder + "/" + file + ".png"));
         }catch(IOException e){
             e.printStackTrace();
         }
