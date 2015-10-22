@@ -7,14 +7,11 @@ package com.hellfire.main;
 
 import com.hellfire.gamestate.GameEngine;
 import com.hellfire.gamestate.GameStateManager;
+import com.hellfire.gamestate.InputListener;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
@@ -22,7 +19,7 @@ import javax.swing.JPanel;
  *
  * @author Xblade45
  */
-public class Panel extends JPanel implements GameEngine, MouseListener, KeyListener, Runnable{
+public class Panel extends JPanel implements GameEngine, Runnable{
 
     GameStateManager gsm;
     
@@ -31,13 +28,6 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
     private static final int P_WIDTH = 512;
     private static final int P_HEIGHT = P_WIDTH / 16 * 9;
     private static final int SCALE = 2;
-    
-    public static boolean isUpPressed = false;
-    public static boolean isDownPressed = false;
-    public static boolean isLeftPressed = false;
-    public static boolean isRightPressed = false;
-    public static boolean isFirePressed = false;
-    public static boolean isChangePressed = false;
     
     private final int DELAY = 15;
     
@@ -62,8 +52,7 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
         gsm = new GameStateManager();
         isRunning = true;
         
-        this.addMouseListener(this);
-        this.addKeyListener(this);
+        this.addKeyListener(new InputListener());
         
         setPreferredSize(new Dimension(getP_WIDTH(), getP_HEIGHT()));
         setDoubleBuffered(true);
@@ -99,6 +88,7 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
 
     @Override
     public void addNotify() {
+        
         super.addNotify();
 
         game = new Thread(this);
@@ -113,6 +103,7 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
     
     @Override
     public void paintComponent(Graphics g){
+        
         super.paintComponent(g);
         draw(g);
         Toolkit.getDefaultToolkit().sync();
@@ -121,73 +112,10 @@ public class Panel extends JPanel implements GameEngine, MouseListener, KeyListe
     @Override
     public void draw(Graphics g) {
         
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, getWidth(), getHeight());
+        // White rect between each frame
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, getP_WIDTH(), getP_HEIGHT());
         
         gsm.draw(g);
     }
-
-    @Override
-    public void mouseClicked(MouseEvent mouseEvent) {}
-    @Override
-    public void mousePressed(MouseEvent mouseEvent) {//envoie le mouseEvent a GSM
-        
-        gsm.mousePressed(mouseEvent);
-    }
-    @Override
-    public void mouseReleased(MouseEvent mouseEvent) {}
-    @Override
-    public void mouseEntered(MouseEvent mouseEvent) {}
-    @Override
-    public void mouseExited(MouseEvent mouseEvent) {}
-    @Override
-    public void keyPressed(KeyEvent e) {
-        switch(e.getKeyCode()){
-        
-            case KeyEvent.VK_W:
-                isUpPressed = true;
-            break;
-            case KeyEvent.VK_S:
-                isDownPressed = true;
-            break;
-            case KeyEvent.VK_A:
-                isLeftPressed = true;
-            break;
-            case KeyEvent.VK_D:
-                isRightPressed = true;
-            break;
-            case KeyEvent.VK_SPACE:
-                isFirePressed = true;
-            break;
-            case KeyEvent.VK_E:
-                isChangePressed = true;
-            break;
-        }
-    }
-    @Override
-    public void keyReleased(KeyEvent e) {
-        switch(e.getKeyCode()){
-        
-            case KeyEvent.VK_W:
-                isUpPressed = false;
-            break;
-            case KeyEvent.VK_S:
-                isDownPressed = false;
-            break;
-            case KeyEvent.VK_A:
-                isLeftPressed = false;
-            break;
-            case KeyEvent.VK_D:
-                isRightPressed = false;
-            break;
-            case KeyEvent.VK_SPACE:
-                isFirePressed = false;
-            break;
-            case KeyEvent.VK_E:
-                isChangePressed = false;
-            break;
-        }
-    }
-    @Override
-    public void keyTyped(KeyEvent e) {}
 }

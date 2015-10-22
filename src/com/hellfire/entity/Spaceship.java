@@ -7,6 +7,7 @@ package com.hellfire.entity;
 
 import com.hellfire.gamestate.GameEngine;
 import com.hellfire.gamestate.ImageLoader;
+import com.hellfire.gamestate.InputListener;
 import com.hellfire.main.Panel;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -179,23 +180,23 @@ public class Spaceship extends Sprite implements GameEngine {
 
     private void checkInput() {
 
-        if (Panel.isUpPressed) {
+        if (InputListener.isUpPressed) {
             this.dy = -1;
         }
-        if (Panel.isDownPressed) {
+        if (InputListener.isDownPressed) {
             this.dy = 1;
         }
-        if (Panel.isLeftPressed) {
+        if (InputListener.isLeftPressed) {
             this.dx = -0.85;
         }
-        if (Panel.isRightPressed) {
+        if (InputListener.isRightPressed) {
             this.dx = 0.85;
         }
-        if (Panel.isFirePressed && fireCounter > FIRE_DELAY) {
+        if (InputListener.isFirePressed && fireCounter > FIRE_DELAY) {
             fire();
             fireCounter = 0;
         }
-        if (Panel.isChangePressed && laserSelectionCounter > LASER_SELECTION_DELAY) {
+        if (InputListener.isChangePressed && laserSelectionCounter > LASER_SELECTION_DELAY) {
             changeLaser();
             laserSelectionCounter = 0;
         }
