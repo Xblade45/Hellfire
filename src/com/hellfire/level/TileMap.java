@@ -29,8 +29,9 @@ public class TileMap {
     private BufferedImage[] tileset;
     
     private Tile[][] tileMap;
+    private int[][] intMap;
     
-    private static final int TILESIZE = 32;
+    private final int TILESIZE = 64;
     
     private final int BLOCKED = 1;
     private final int NORMAL = 0;
@@ -52,6 +53,7 @@ public class TileMap {
         this.dy = 0;
         
         tileMap = new Tile[40][40];
+        intMap = new int[40][40];
         
         loadTileMap();
     }
@@ -69,7 +71,7 @@ public class TileMap {
             for(int j=0; j<40; j++){
                 
                 if(j*TILESIZE+(int)posX+TILESIZE>=0 && j*TILESIZE+(int)posX < Panel.getP_WIDTH()+TILESIZE)
-                    g.drawImage(tileMap[i][j].getImage(), j*TILESIZE+(int)posX, i*TILESIZE+(int)posY, null);
+                    g.drawImage(tileset[intMap[i][j]], j*TILESIZE+(int)posX, i*TILESIZE+(int)posY, null);
             }
         }
     }
@@ -93,11 +95,12 @@ public class TileMap {
                     
                     int token = Integer.parseInt(tokens[j]);
                     
-                    tileMap[counter][j] = new Tile((token==0? tileset[0]:tileset[1]), (token==0? NORMAL:BLOCKED));
+                    intMap[counter][j] = token;
                 }
                 counter++;
             }
             br.close();
+            
         }catch(IOException e){
             e.printStackTrace();
         }
