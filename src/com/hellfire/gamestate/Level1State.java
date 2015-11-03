@@ -36,7 +36,7 @@ public class Level1State extends GameState{
         
         backLayer = new Background("background1", SCROLLSPEED_DEFAULT);
         middleLayer = new Background("background2", SCROLLSPEED_DEFAULT +1);
-        tileMap = new TileMap("tileset1", SCROLLSPEED_DEFAULT +2);
+        tileMap = new TileMap("tileset1", SCROLLSPEED_DEFAULT +1.5);
         player = new Player(Panel.getP_WIDTH()/2, Panel.getP_HEIGHT()/2, "spaceship1", "Spaceships");//Center of panel
     }
     
@@ -46,7 +46,6 @@ public class Level1State extends GameState{
         backLayer.draw(g);
         middleLayer.draw(g);
         tileMap.draw(g);
-        
         player.draw(g);
     }
 
@@ -56,7 +55,6 @@ public class Level1State extends GameState{
         backLayer.update();
         middleLayer.update();
         tileMap.update();
-        
         player.update();
     }
 }

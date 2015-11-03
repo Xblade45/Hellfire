@@ -52,10 +52,10 @@ public class Background implements GameEngine {
     @Override
     public final void init() {
         
-        this.dx = -1;
-        this.dy = 0;
         this.posX = 0;
         this.posY = 0;
+        this.dx = -1;
+        this.dy = 0;
     }
 
     @Override
@@ -64,8 +64,8 @@ public class Background implements GameEngine {
     @Override
     public void update() {
         
-        posX += dx*scrollSpeed;
-        posY += dy*scrollSpeed;
+        this.posX += dx*scrollSpeed;
+        this.posY += dy*scrollSpeed;
     }
 
     @Override

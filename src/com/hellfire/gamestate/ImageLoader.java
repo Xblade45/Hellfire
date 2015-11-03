@@ -53,7 +53,7 @@ public class ImageLoader {
             
             for(int i=0; i<numCol; i++){// X axis
                 
-                tileTab[i*(j+1)] = img.getSubimage(i, j, tileSize, tileSize);
+                tileTab[i*(j+1)] = img.getSubimage(i*tileSize, j*tileSize, tileSize, tileSize);
             }
         }
         return tileTab;

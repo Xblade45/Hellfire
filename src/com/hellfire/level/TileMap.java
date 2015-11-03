@@ -11,7 +11,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -52,15 +51,15 @@ public class TileMap {
         this.dx = -1;
         this.dy = 0;
         
-        tileMap = new Tile[Panel.getP_WIDTH()/TILESIZE][Panel.getP_HEIGHT()/TILESIZE];
+        tileMap = new Tile[40][40];
         
         loadTileMap();
     }
     
     public void update(){
         
-        this.posX = dx*scrollSpeed;
-        this.posY = dy*scrollSpeed;
+        this.posX += dx*scrollSpeed;
+        this.posY += dy*scrollSpeed;
     }
     
     public void draw(Graphics g){
@@ -69,7 +68,8 @@ public class TileMap {
             
             for(int j=0; j<40; j++){
                 
-                g.drawImage(tileMap[i][j].getImage(), i*TILESIZE, j*TILESIZE, null);
+                if(j*TILESIZE+(int)posX+TILESIZE>=0 && j*TILESIZE+(int)posX < Panel.getP_WIDTH()+TILESIZE)
+                    g.drawImage(tileMap[i][j].getImage(), j*TILESIZE+(int)posX, i*TILESIZE+(int)posY, null);
             }
         }
     }
@@ -78,23 +78,26 @@ public class TileMap {
         
         try{
             
-            BufferedReader br = new BufferedReader(new FileReader(new File("TileMap/level1.txt")));
+            BufferedReader br = new BufferedReader(new FileReader(new File("resources/TileMap/level1.txt")));
             
-            String delimiter = " ";
+            String delimiter = "\\s+";
             int counter = 0;
             
-            while(br.readLine() != null){
-                String line = br.readLine();
+            String line;
+            
+            while((line = br.readLine()) != null){
+                
                 String[] tokens = line.split(delimiter);
                 
-                for(int i=0; i<tokens.length; i++){
+                for(int j=0; j<tokens.length; j++){
                     
-                    int token = Integer.parseInt(tokens[i]);
+                    int token = Integer.parseInt(tokens[j]);
                     
-                    tileMap[counter][i] = new Tile((token==0? tileset[0]:tileset[1]), (token==0? NORMAL:BLOCKED));
+                    tileMap[counter][j] = new Tile((token==0? tileset[0]:tileset[1]), (token==0? NORMAL:BLOCKED));
                 }
                 counter++;
             }
+            br.close();
         }catch(IOException e){
             e.printStackTrace();
         }
