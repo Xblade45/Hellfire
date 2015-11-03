@@ -13,11 +13,23 @@ import java.awt.image.BufferedImage;
  */
 public class Tile {
     
-    public static final int TILESIZE = 32;
+    private int type;
     
-    private int posX;
-    private int posY;
+    private BufferedImage image;
     
-    private BufferedImage texture;
+    // Constructor
+    public Tile(BufferedImage image, int type){
+        
+        this.image = image;
+        this.type = type;
+    }
     
+    // Accessors
+    public BufferedImage getImage(){
+        return image;
+    }
+    
+    public int getType(){
+        return type;
+    }
 }

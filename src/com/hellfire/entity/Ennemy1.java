@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hellfire.level;
+package com.hellfire.entity;
 
 /**
  *
  * @author Xblade45
  */
-public class InitializeMap {
+public class Ennemy1 {
     
 }

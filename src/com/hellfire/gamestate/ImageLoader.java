@@ -42,18 +42,18 @@ public class ImageLoader {
         return animation;
     }
     
-    public static BufferedImage[][] getTileTab(BufferedImage img, int tileSize){
+    public static BufferedImage[] getTileTab(BufferedImage img, int tileSize){
 
         int numCol = img.getWidth() / tileSize;
         int numRow = img.getHeight() / tileSize;
         
-        BufferedImage[][] tileTab = new BufferedImage[numCol][numRow];
+        BufferedImage[] tileTab = new BufferedImage[numCol*numRow];
         
         for(int j=0; j<numRow; j++){// Y axis
             
             for(int i=0; i<numCol; i++){// X axis
                 
-                tileTab[i][j] = img.getSubimage(i, j, tileSize, tileSize);
+                tileTab[i*(j+1)] = img.getSubimage(i, j, tileSize, tileSize);
             }
         }
         return tileTab;

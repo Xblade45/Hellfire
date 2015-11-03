@@ -5,8 +5,9 @@
  */
 package com.hellfire.gamestate;
 
-import com.hellfire.entity.Spaceship;
+import com.hellfire.entity.Player;
 import com.hellfire.level.Background;
+import com.hellfire.level.TileMap;
 import com.hellfire.main.Panel;
 import java.awt.Graphics;
 
@@ -18,8 +19,8 @@ public class Level1State extends GameState{
     
     Background backLayer;
     Background middleLayer;
-    Background frontLayer;
-    Spaceship player;
+    TileMap tileMap;
+    Player player;
     
     private final double SCROLLSPEED_DEFAULT = 1.5;
     
@@ -35,8 +36,8 @@ public class Level1State extends GameState{
         
         backLayer = new Background("background1", SCROLLSPEED_DEFAULT);
         middleLayer = new Background("background2", SCROLLSPEED_DEFAULT +1);
-        //frontLayer = new Background("background3", SCROLLSPEED_DEFAULT +2);
-        player = new Spaceship(Panel.getP_WIDTH()/2, Panel.getP_HEIGHT()/2);//Center of panel
+        tileMap = new TileMap("tileset1", SCROLLSPEED_DEFAULT +2);
+        player = new Player(Panel.getP_WIDTH()/2, Panel.getP_HEIGHT()/2, "spaceship1", "Spaceships");//Center of panel
     }
     
     @Override
@@ -44,7 +45,7 @@ public class Level1State extends GameState{
         
         backLayer.draw(g);
         middleLayer.draw(g);
-        //frontLayer.draw(g);
+        tileMap.draw(g);
         
         player.draw(g);
     }
@@ -54,7 +55,7 @@ public class Level1State extends GameState{
         
         backLayer.update();
         middleLayer.update();
-        //frontLayer.update();
+        tileMap.update();
         
         player.update();
     }

@@ -5,8 +5,6 @@
  */
 package com.hellfire.entity;
 
-import com.hellfire.gamestate.GameEngine;
-import com.hellfire.gamestate.ImageLoader;
 import com.hellfire.main.Panel;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,15 +14,9 @@ import java.awt.geom.AffineTransform;
  *
  * @author Xblade45
  */
-public class Laser extends Sprite implements GameEngine {
-    
-    private double dx;
-    private double dy;
-    
-    private double speed;
+public class Laser extends Sprite{
     
     private int rotation;
-    
     private int currentDirection;
     
     public static final int NORTH = 0;
@@ -36,10 +28,11 @@ public class Laser extends Sprite implements GameEngine {
     public static final int SW = 6;
     public static final int SE = 7;
     
+
     //constructor
-    public Laser(int x, int y, int direction){
+    public Laser(int x, int y, int direction, String sprite, String directory){
         
-        super(x, y);
+        super(x, y, sprite, directory, 1);
         
         this.currentDirection = direction;
         
@@ -47,14 +40,13 @@ public class Laser extends Sprite implements GameEngine {
     }
 
     //methods
-    @Override
     public final void init() {
 
         this.speed = 15;
         
         setVectorAndRotation();
         
-        image = ImageLoader.load("Lasers", "laser1");
+        image = animation.getImage();
     }
     
     public boolean isVisible(){
@@ -113,14 +105,11 @@ public class Laser extends Sprite implements GameEngine {
     }
     
     @Override
-    public void run() {}
-    @Override
     public void update() {
-        
-        posX += dx*speed;
-        posY += dy*speed;
+       
+        super.update();
     }
-    @Override
+    
     public void draw(Graphics g) {
         
         Graphics2D g2d = (Graphics2D) g;
@@ -131,5 +120,4 @@ public class Laser extends Sprite implements GameEngine {
         g2d.drawImage(image, posX, posY, null);
         g2d.setTransform(backup);
     }
-    
 }
