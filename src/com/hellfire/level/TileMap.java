@@ -23,24 +23,21 @@ import java.io.IOException;
 public class TileMap extends Sprite {
     
     private BufferedImage[] tileset;
-    
     private Tile[][] tileMap;
-    private int[][] intMap;
     
     private final int TILESIZE = 64;
     
     private final int BLOCKED = 1;
     private final int NORMAL = 0;
     
-    public TileMap(String tilesetImage, double speed){
+    public TileMap(String tilesetImage, String tileMapFile, double speed){
         
         super(0, 0);
-        
-        this.speed = speed;
-        
-        tileset = ImageLoader.getTileTab(ImageLoader.load("TileMap", tilesetImage), TILESIZE);
-        
         init();
+        
+        this.tileset = ImageLoader.getTileTab(ImageLoader.load("TileMap", tilesetImage), TILESIZE);
+        this.tileMap = loadTileMap(tileMapFile);
+        this.speed = speed;
     }
     
     private void init(){
@@ -49,12 +46,6 @@ public class TileMap extends Sprite {
         this.posY = 0;
         this.dx = -1;
         this.dy = 0;
-        
-        tileMap = new Tile[40][40];
-        intMap = new int[40][40];
-        
-        loadTileMap(intMap);
-        convertIntToTileMap(intMap, tileMap, tileset);
     }
     
     @Override
@@ -64,33 +55,43 @@ public class TileMap extends Sprite {
         this.posY += dy*speed;
     }
     
+    public Tile getTile(int col, int row){
+        return tileMap[row][col];
+    }
+    
     public void draw(Graphics g){
         
-        for(int i=0; i<40; i++){
-            
-            for(int j=0; j<40; j++){
-                
-                if(j*TILESIZE+(int)posX+TILESIZE>=0 && j*TILESIZE+(int)posX < Panel.getP_WIDTH()+TILESIZE)
-                    g.drawImage(tileset[intMap[i][j]], j*TILESIZE+(int)posX, i*TILESIZE+(int)posY, null);
+        for(int row=0; row<40; row++){
+
+            for(int col=0; col<40; col++){
+
+                if(col*TILESIZE+(int)posX+TILESIZE>=0 && col*TILESIZE+(int)posX < Panel.getP_WIDTH()+TILESIZE)
+                    g.drawImage(tileMap[row][col].getImage(), col*TILESIZE+(int)posX, row*TILESIZE+(int)posY, null);
             }
         }
     }
     
-    public void getCollision(Rectangle bounds){
+    
+    public boolean getCollision(Rectangle input){
+        
         for(int row=0; row<40; row++){
             
             for(int col=0; col<40; col++){
                 
-                
+                if(tileMap[row][col].getType() == 1 && input.intersects(tileMap[row][col].getBounds()))
+                    return true;
             }
         }
+        return false;
     }
     
-    private void loadTileMap(int[][] intMap){
+    private Tile[][] loadTileMap(String tileMapFile){
+        
+        int[][] intMap = new int[40][40];
         
         try{
             
-            BufferedReader br = new BufferedReader(new FileReader(new File("resources/TileMap/level1.txt")));
+            BufferedReader br = new BufferedReader(new FileReader(new File("resources/TileMap/" + tileMapFile + ".txt")));
             
             String delimiter = "\\s+";
             int counter = 0;
@@ -114,17 +115,22 @@ public class TileMap extends Sprite {
         }catch(IOException e){
             e.printStackTrace();
         }
+        
+        return convertIntToTileMap(intMap);
     }
     
-    private void convertIntToTileMap(int[][] intMap, Tile[][] tileMap, BufferedImage[] tileset){
+    private Tile[][] convertIntToTileMap(int[][] intMap){
+        
+        Tile[][] tabT = new Tile [40][40];
         
         for(int row=0; row<40; row++){
             
             for(int col=0; col<40; col++){
                 
-                Tile t = new Tile(tileset[intMap[row][col]], BLOCKED);
-                tileMap[row][col] = t;
+                Tile t = new Tile(posX + (col*TILESIZE), posY + (row*TILESIZE), tileset[intMap[row][col]], BLOCKED);
+                tabT[row][col] = t;
             }
         }
+        return tabT;
     }
 }

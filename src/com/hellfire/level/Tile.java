@@ -5,28 +5,23 @@
  */
 package com.hellfire.level;
 
+import com.hellfire.entity.Sprite;
 import java.awt.image.BufferedImage;
 
 /**
  *
  * @author Xblade45
  */
-public class Tile {
+public class Tile extends Sprite{
     
     private int type;
     
-    private BufferedImage image;
-    
     // Constructor
-    public Tile(BufferedImage image, int type){
+    public Tile(int x, int y, BufferedImage image, int type){
         
-        this.image = image;
+        super(x, y, image);
+        
         this.type = type;
-    }
-    
-    // Accessors
-    public BufferedImage getImage(){
-        return image;
     }
     
     public int getType(){

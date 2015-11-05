@@ -6,6 +6,7 @@
 package com.hellfire.entity;
 
 import com.hellfire.gamestate.ImageLoader;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 /**
@@ -30,12 +31,23 @@ public abstract class Sprite {
     //constructor
     public Sprite(int x, int y, String sprite, String directory, int nbFrames){
         
-        this.posX = x;
-        this.posY = y;
+        this(x, y);
         this.dx = 0;
         this.dy = 0;
         
         initImages(sprite, directory, nbFrames);
+    }
+    
+    public Sprite(int x, int y, BufferedImage image){
+        
+        this(x, y);
+        this.image = image;
+    }
+    
+    public Sprite(int x, int y){
+                
+        this.posX = x;
+        this.posY = y;
     }
     
     protected void update(){
@@ -43,6 +55,10 @@ public abstract class Sprite {
         //update position
         this.posX += dx*speed;
         this.posY += dy*speed;
+    }
+    
+    public Rectangle getBounds(){
+        return new Rectangle(posX, posY, width, height);
     }
     
     private void initImages(String sprite, String directory, int nbFrames){
@@ -68,5 +84,8 @@ public abstract class Sprite {
     }
     public int getHeight() {
         return height;
+    }
+    public BufferedImage getImage(){
+        return image;
     }
 }
