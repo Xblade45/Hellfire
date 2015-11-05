@@ -59,7 +59,7 @@ public abstract class Spaceship extends Sprite {
         }
     }
 
-   public void draw(Graphics g) {
+    public void draw(Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(animation.getImage(), posX, posY, null);
@@ -73,5 +73,9 @@ public abstract class Spaceship extends Sprite {
             else
                 lasers.remove(i);
         }
+    }
+   
+    public boolean getCollision(Sprite sprite){
+       return sprite.getBounds().intersects(getBounds());
     }
 }
