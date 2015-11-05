@@ -5,9 +5,11 @@
  */
 package com.hellfire.level;
 
+import com.hellfire.entity.Sprite;
 import com.hellfire.gamestate.ImageLoader;
 import com.hellfire.main.Panel;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,13 +20,7 @@ import java.io.IOException;
  *
  * @author Xblade45
  */
-public class TileMap {
-    
-    private double posX;
-    private double posY;
-    private double dx;
-    private double dy;
-    private double scrollSpeed;
+public class TileMap extends Sprite {
     
     private BufferedImage[] tileset;
     
@@ -36,9 +32,11 @@ public class TileMap {
     private final int BLOCKED = 1;
     private final int NORMAL = 0;
     
-    public TileMap(String tilesetImage, double scrollSpeed){
+    public TileMap(String tilesetImage, double speed){
         
-        this.scrollSpeed = scrollSpeed;
+        super(0, 0);
+        
+        this.speed = speed;
         
         tileset = ImageLoader.getTileTab(ImageLoader.load("TileMap", tilesetImage), TILESIZE);
         
@@ -55,13 +53,15 @@ public class TileMap {
         tileMap = new Tile[40][40];
         intMap = new int[40][40];
         
-        loadTileMap();
+        loadTileMap(intMap);
+        convertIntToTileMap(intMap, tileMap, tileset);
     }
     
+    @Override
     public void update(){
         
-        this.posX += dx*scrollSpeed;
-        this.posY += dy*scrollSpeed;
+        this.posX += dx*speed;
+        this.posY += dy*speed;
     }
     
     public void draw(Graphics g){
@@ -76,7 +76,17 @@ public class TileMap {
         }
     }
     
-    private void loadTileMap(){
+    public void getCollision(Rectangle bounds){
+        for(int row=0; row<40; row++){
+            
+            for(int col=0; col<40; col++){
+                
+                
+            }
+        }
+    }
+    
+    private void loadTileMap(int[][] intMap){
         
         try{
             
@@ -106,4 +116,15 @@ public class TileMap {
         }
     }
     
+    private void convertIntToTileMap(int[][] intMap, Tile[][] tileMap, BufferedImage[] tileset){
+        
+        for(int row=0; row<40; row++){
+            
+            for(int col=0; col<40; col++){
+                
+                Tile t = new Tile(tileset[intMap[row][col]], BLOCKED);
+                tileMap[row][col] = t;
+            }
+        }
+    }
 }
