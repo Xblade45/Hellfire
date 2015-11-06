@@ -71,6 +71,10 @@ public class Animation {
         return frames[currentFrame];
     }
     
+    public BufferedImage getFrames(int index){
+        return frames[index];
+    }
+    
     public boolean hasPlayedOnce(){
         return playedOnce;
     }

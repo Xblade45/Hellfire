@@ -20,6 +20,7 @@ public class InputListener implements KeyListener {
     public static boolean isRightPressed = false;
     public static boolean isFirePressed = false;
     public static boolean isChangePressed = false;
+    public static boolean isEnterPressed = false;
     
     public InputListener(){}
     
@@ -45,6 +46,9 @@ public class InputListener implements KeyListener {
             case KeyEvent.VK_E:
                 isChangePressed = true;
             break;
+            case KeyEvent.VK_ENTER:
+                isEnterPressed = true;
+            break;
         }
     }
     @Override
@@ -68,6 +72,9 @@ public class InputListener implements KeyListener {
             break;
             case KeyEvent.VK_E:
                 isChangePressed = false;
+            break;
+            case KeyEvent.VK_ENTER:
+                isEnterPressed = false;
             break;
         }
     }

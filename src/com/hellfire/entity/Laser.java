@@ -5,7 +5,7 @@
  */
 package com.hellfire.entity;
 
-import com.hellfire.main.Panel;
+import com.hellfire.gamestate.ImageLoader;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -19,20 +19,11 @@ public class Laser extends Sprite{
     private int rotation;
     private int currentDirection;
     
-    public static final int NORTH = 0;
-    public static final int SOUTH = 1;
-    public static final int EAST = 2;
-    public static final int WEST = 3;
-    public static final int NW = 4;
-    public static final int NE = 5;
-    public static final int SW = 6;
-    public static final int SE = 7;
-    
 
     //constructor
-    public Laser(int x, int y, int direction, String sprite, String directory){
+    public Laser(int x, int y, int direction, String sprite){
         
-        super(x, y, sprite, directory, 1);
+        super(x, y, ImageLoader.load(LASER, sprite));
         
         this.currentDirection = direction;
         
@@ -45,16 +36,6 @@ public class Laser extends Sprite{
         this.speed = 15;
         
         setVectorAndRotation();
-        
-        image = animation.getImage();
-    }
-    
-    public boolean isVisible(){
-        
-        return posX < Panel.getP_WIDTH()
-            && posX > 0
-            && posY > 0 
-            && posY < Panel.getP_HEIGHT();
     }
     
     private void setVectorAndRotation(){

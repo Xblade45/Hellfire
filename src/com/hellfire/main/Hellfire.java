@@ -15,7 +15,6 @@ import javax.swing.JFrame;
 public class Hellfire extends JFrame{
 
     
-    
     public Hellfire(){
         
         initUI();

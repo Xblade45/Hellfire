@@ -15,12 +15,12 @@ import java.awt.Graphics;
  *
  * @author Xblade45
  */
-public class Level1State extends GameState{
+public class Level1State extends GameState {
     
-    Background backLayer;
-    Background middleLayer;
-    TileMap tileMap;
-    Player player;
+    private Background backLayer;
+    private Background middleLayer;
+    private TileMap tileMap;
+    private Player player;
     
     private final double SCROLLSPEED_DEFAULT = 1.5;
     

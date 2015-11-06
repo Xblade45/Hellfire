@@ -19,11 +19,11 @@ import javax.swing.JPanel;
  *
  * @author Xblade45
  */
-public class Panel extends JPanel implements GameEngine, Runnable{
+public class Panel extends JPanel implements GameEngine, Runnable {
 
     GameStateManager gsm;
     
-    private boolean isRunning;
+    private static boolean isRunning = true;
     
     private static final int P_WIDTH = 512;
     private static final int P_HEIGHT = P_WIDTH / 16 * 9;
@@ -46,11 +46,14 @@ public class Panel extends JPanel implements GameEngine, Runnable{
         return P_HEIGHT*SCALE;
     }
     
+    public static void setRunning(Boolean b){
+        Panel.isRunning = b;
+    }
+    
     @Override
     public final void init() {
         
-        gsm = new GameStateManager();
-        isRunning = true;
+        this.gsm = new GameStateManager();
         
         this.addKeyListener(new InputListener());
         
@@ -84,6 +87,7 @@ public class Panel extends JPanel implements GameEngine, Runnable{
                 e.printStackTrace();
             }
         }
+        System.exit(0);
     }
 
     @Override

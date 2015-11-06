@@ -11,21 +11,22 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import javax.swing.JLabel;
 
 /**
  *
  * @author Xblade45
  */
-public class MenuState extends GameState{
+public class MenuState extends GameState {
     
     
-    Font menuFont;
-    Background background;
-    JLabel startMenu;
-    JLabel quitMenu;
+    private Font menuFont;
+    private Background background;
+    
+    private int currentMenuState;
+    
+    private final int STARTMENUSTATE = 0;
+    private final int QUITMENUSTATE = 1;
+    
     
     public MenuState(GameStateManager gsm){
         
@@ -37,22 +38,17 @@ public class MenuState extends GameState{
     @Override
     public final void init() {
         
+        currentMenuState = STARTMENUSTATE;
+        
         menuFont = new Font(Font.MONOSPACED, Font.PLAIN, 14);
+        background = new Background("background1");
     }
     
     @Override
     public void draw(Graphics g) {
         
         // Black Background
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, Panel.getP_WIDTH(), Panel.getP_HEIGHT());
-        
-        // String color
-        g.setColor(Color.WHITE);
-        
-        // Center Tests
-        //g.drawLine(Panel.getP_WIDTH()/2, 0, Panel.getP_WIDTH()/2, Panel.getP_HEIGHT());
-        //g.drawLine(0, Panel.getP_HEIGHT()/2, Panel.getP_WIDTH(), Panel.getP_HEIGHT()/2);
+        background.draw(g);
         
         //String font
         g.setFont(menuFont);
@@ -61,28 +57,41 @@ public class MenuState extends GameState{
         FontMetrics fm = g.getFontMetrics();      
         int centerX = Panel.getP_WIDTH()/2 - fm.stringWidth("start")/2;
         
+        
         // Draw String/Menu
-        g.drawString("Start", centerX, Panel.getP_HEIGHT()*12/25);
-        g.drawString("Quit", centerX, Panel.getP_HEIGHT()*13/25);
+        if(currentMenuState == STARTMENUSTATE){
+            
+            g.setColor(Color.red);
+            g.drawString("Start", centerX, Panel.getP_HEIGHT()*12/25);
+            g.setColor(Color.white);
+            g.drawString("Quit", centerX, Panel.getP_HEIGHT()*13/25);
+        }else{
+            
+            g.setColor(Color.white);
+            g.drawString("Start", centerX, Panel.getP_HEIGHT()*12/25);
+            g.setColor(Color.red);
+            g.drawString("Quit", centerX, Panel.getP_HEIGHT()*13/25);
+        }  
     }
 
     @Override
     public void update() {
-    
+
+        navigateMenu();
+        checkSelection();
     }
     
-    @Override
-    public void keyPressed(KeyEvent e) {
-    
+    private void navigateMenu(){
+        if(InputListener.isDownPressed && currentMenuState == STARTMENUSTATE)
+            this.currentMenuState = QUITMENUSTATE;
+        else if(InputListener.isDownPressed && currentMenuState == QUITMENUSTATE)
+            this.currentMenuState = STARTMENUSTATE;
     }
     
-    @Override
-    public void keyReleased(KeyEvent e) {
-    
-    }
-    
-    @Override
-    public void mousePressed(MouseEvent me) {
-        
+    private void checkSelection(){
+        if(currentMenuState == STARTMENUSTATE && InputListener.isEnterPressed)
+            gsm.start();
+        else if(InputListener.isEnterPressed)
+            gsm.quit();
     }
 }

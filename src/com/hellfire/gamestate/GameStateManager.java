@@ -5,6 +5,7 @@
  */
 package com.hellfire.gamestate;
 
+import com.hellfire.main.Panel;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -48,6 +49,10 @@ public class GameStateManager implements GameEngine, MouseListener, KeyListener{
     
     public void start(){
         setState(LEVEL1STATE);
+    }
+    
+    public void quit(){
+        Panel.setRunning(false);
     }
 
     @Override

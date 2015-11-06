@@ -17,21 +17,20 @@ import java.awt.Graphics;
 public class Background extends Sprite implements GameEngine {
     
     //Constructor
-    public Background(String file, double scrollSpeed){
+    public Background(String file){
         
         super();
-        
-        this.speed = scrollSpeed;
         
         image = ImageLoader.load(BACKGROUND, file);
         
         init();
     }
     
-    public Background(String file, double scrollSpeed, int dx, int dy){
+    public Background(String file, double speed, int dx, int dy){
         
-        this(file, scrollSpeed);
+        this(file);
         
+        this.speed = speed;
         this.dx = dx;
         this.dy = dy;
     }
@@ -53,6 +52,7 @@ public class Background extends Sprite implements GameEngine {
         this.posY = 0;
         this.dx = 0;
         this.dy = 0;
+        this.speed = 0;
     }
 
     @Override

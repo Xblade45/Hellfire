@@ -6,6 +6,7 @@
 package com.hellfire.entity;
 
 import com.hellfire.gamestate.ImageLoader;
+import com.hellfire.main.Panel;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
@@ -35,19 +36,33 @@ public abstract class Sprite {
     public static final String SPACESHIP = "Spaceships";
     public static final String TILEMAP = "TileMap";
     
+    // Direction
+    public static final int NORTH = 0;
+    public static final int SOUTH = 1;
+    public static final int EAST = 2;
+    public static final int WEST = 3;
+    public static final int NW = 4;
+    public static final int NE = 5;
+    public static final int SW = 6;
+    public static final int SE = 7;
+    
     // constructor
     public Sprite(int x, int y, String sprite, String directory, int nbFrames){
+        // With Animation
         
         this(x, y);
         this.dx = 0;
         this.dy = 0;
         
         initAnimation(sprite, directory, nbFrames);
+        
+        this.image = animation.getFrames(0);
         this.width = animation.getImage().getWidth();
         this.height = animation.getImage().getHeight();
     }
     
     public Sprite(int x, int y, BufferedImage image){
+        // With 1 Image
         
         this(x, y);
         this.image = image;
@@ -57,13 +72,14 @@ public abstract class Sprite {
     }
     
     public Sprite(int x, int y){
+        // default constructor#2
                 
         this.posX = x;
         this.posY = y;
     }
     
     public Sprite(){
-        
+        // default constructor#1
     }
         
     // getter
@@ -97,6 +113,14 @@ public abstract class Sprite {
         //update position
         this.posX += dx*speed;
         this.posY += dy*speed;
+    }
+    
+    public boolean isVisible(){
+        
+        return posX < Panel.getP_WIDTH()
+            && posX > 0
+            && posY > 0 
+            && posY < Panel.getP_HEIGHT();
     }
     
     public Rectangle getBounds(){

@@ -81,20 +81,20 @@ public class Player extends Spaceship {
     private void fire() {
 
         if (currentLaserType == FRONT) {
-            lasers.add(new Laser(posX + width, posY + height / 2, Laser.EAST, "laser1", "Lasers"));
+            lasers.add(new Laser(posX + width, posY + height / 2, Laser.EAST, "laser1"));
         }
         if (currentLaserType == REAR) {
-            lasers.add(new Laser(posX - LASER_PADDING, posY + height / 2, Laser.WEST, "laser1", "Lasers"));
+            lasers.add(new Laser(posX - LASER_PADDING, posY + height / 2, Laser.WEST, "laser1"));
         }
         if (currentLaserType == UPDOWN) {
-            lasers.add(new Laser(posX + width / 2, posY - 20, Laser.NORTH, "laser1", "Lasers"));
-            lasers.add(new Laser(posX + width / 2, posY + height - 10, Laser.SOUTH, "laser1", "Lasers"));
+            lasers.add(new Laser(posX + width / 2, posY - 20, Laser.NORTH, "laser1"));
+            lasers.add(new Laser(posX + width / 2, posY + height - 10, Laser.SOUTH, "laser1"));
         }
         if (currentLaserType == DIAG) {
-            lasers.add(new Laser(posX, posY - 10, Laser.NW, "laser1", "Lasers"));
-            lasers.add(new Laser(posX + width, posY - 10, Laser.NE, "laser1", "Lasers"));
-            lasers.add(new Laser(posX, posY + height - 20, Laser.SW, "laser1", "Lasers"));
-            lasers.add(new Laser(posX + width - 10, posY + height - 20, Laser.SE, "laser1", "Lasers"));
+            lasers.add(new Laser(posX, posY - 10, Laser.NW, "laser1"));
+            lasers.add(new Laser(posX + width, posY - 10, Laser.NE, "laser1"));
+            lasers.add(new Laser(posX, posY + height - 20, Laser.SW, "laser1"));
+            lasers.add(new Laser(posX + width - 10, posY + height - 20, Laser.SE, "laser1"));
         }
     }
 
