@@ -37,7 +37,7 @@ public class Level1State extends GameState {
         backLayer = new Background("background1", SCROLLSPEED_DEFAULT, -1, 0);
         middleLayer = new Background("background2", SCROLLSPEED_DEFAULT +1, -1, 0);
         tileMap = new TileMap("tileset2", "level1", SCROLLSPEED_DEFAULT +1.5);
-        player = new Player(Panel.getP_WIDTH()/2, Panel.getP_HEIGHT()/2, "spaceship1");
+        player = new Player(Panel.getP_WIDTH()/2, Panel.getP_HEIGHT()/2, "spaceship1-small");
     }
     
     @Override

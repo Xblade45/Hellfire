@@ -11,7 +11,6 @@ import com.hellfire.gamestate.InputListener;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Toolkit;
 
 import javax.swing.JPanel;
 
@@ -111,7 +110,6 @@ public class Panel extends JPanel implements GameEngine, Runnable {
         
         super.paintComponent(g);
         draw(g);
-        Toolkit.getDefaultToolkit().sync();
     }
     
     @Override
