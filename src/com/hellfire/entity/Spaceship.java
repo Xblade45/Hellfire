@@ -23,9 +23,9 @@ public abstract class Spaceship extends Sprite {
     protected final int FIRE_DELAY = 5;
 
     //constructor
-    public Spaceship(int x, int y, String sprite, String directory) {
+    public Spaceship(int x, int y, String sprite) {
         
-        super(x, y, sprite, directory, 5);
+        super(x, y, sprite, SPACESHIP, 5);
         
         init();
     }
@@ -76,6 +76,6 @@ public abstract class Spaceship extends Sprite {
     }
    
     public boolean getCollision(Sprite sprite){
-       return sprite.getBounds().intersects(getBounds());
+        return sprite.getBounds().intersects(getBounds());
     }
 }

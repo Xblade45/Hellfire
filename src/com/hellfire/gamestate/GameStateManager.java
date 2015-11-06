@@ -24,7 +24,6 @@ public class GameStateManager implements GameEngine, MouseListener, KeyListener{
     private final ArrayList<GameState> gameStates;
     private int currentState;
     
-    
     public static final int MENUSTATE = 0;
     public static final int LEVEL1STATE = 1;
     
@@ -37,10 +36,18 @@ public class GameStateManager implements GameEngine, MouseListener, KeyListener{
         gameStates.add(new Level1State(this));
     }
     
-    public void setState(int currentState){
+    private void setState(int currentState){
         
         this.currentState = currentState;
         gameStates.get(currentState).init();
+    }
+    
+    public void gameOver(){
+        setState(MENUSTATE);
+    }
+    
+    public void start(){
+        setState(LEVEL1STATE);
     }
 
     @Override

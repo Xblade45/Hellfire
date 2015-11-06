@@ -9,7 +9,6 @@ import com.hellfire.entity.Sprite;
 import com.hellfire.gamestate.ImageLoader;
 import com.hellfire.main.Panel;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,15 +26,16 @@ public class TileMap extends Sprite {
     
     private final int TILESIZE = 64;
     
-    private final int BLOCKED = 1;
     private final int NORMAL = 0;
+    private final int BLOCKED = 1;
+    
     
     public TileMap(String tilesetImage, String tileMapFile, double speed){
         
         super(0, 0);
         init();
         
-        this.tileset = ImageLoader.getTileTab(ImageLoader.load("TileMap", tilesetImage), TILESIZE);
+        this.tileset = ImageLoader.getTileTab(ImageLoader.load(TILEMAP, tilesetImage), TILESIZE);
         this.tileMap = loadTileMap(tileMapFile);
         this.speed = speed;
     }
@@ -53,6 +53,15 @@ public class TileMap extends Sprite {
         
         this.posX += dx*speed;
         this.posY += dy*speed;
+        
+        for(int row=0; row<40; row++){
+
+            for(int col=0; col<40; col++){
+
+                tileMap[row][col].setPosX(posX + (col*TILESIZE));
+                tileMap[row][col].setPosY(posY + (row*TILESIZE));
+            }
+        }
     }
     
     public Tile getTile(int col, int row){
@@ -71,18 +80,19 @@ public class TileMap extends Sprite {
         }
     }
     
-    
-    public boolean getCollision(Rectangle input){
+    public boolean getCollision(Sprite sprite){
+        
+        boolean b = false;
         
         for(int row=0; row<40; row++){
             
             for(int col=0; col<40; col++){
                 
-                if(tileMap[row][col].getType() == 1 && input.intersects(tileMap[row][col].getBounds()))
-                    return true;
+                if(tileMap[row][col].getType() == BLOCKED && sprite.getBounds().intersects(tileMap[row][col].getBounds()))
+                    b = true;
             }
         }
-        return false;
+        return b;
     }
     
     private Tile[][] loadTileMap(String tileMapFile){
@@ -91,11 +101,11 @@ public class TileMap extends Sprite {
         
         try{
             
-            BufferedReader br = new BufferedReader(new FileReader(new File("resources/TileMap/" + tileMapFile + ".txt")));
+            BufferedReader br = new BufferedReader(new FileReader(new File("resources/" + TILEMAP + "/" + tileMapFile + ".txt")));
             
             String delimiter = "\\s+";
-            int counter = 0;
             
+            int row = 0;
             String line;
             
             while((line = br.readLine()) != null){
@@ -106,9 +116,9 @@ public class TileMap extends Sprite {
                     
                     int token = Integer.parseInt(tokens[j]);
                     
-                    intMap[counter][j] = token;
+                    intMap[row][j] = token;
                 }
-                counter++;
+                row++;
             }
             br.close();
             
@@ -127,7 +137,7 @@ public class TileMap extends Sprite {
             
             for(int col=0; col<40; col++){
                 
-                Tile t = new Tile(posX + (col*TILESIZE), posY + (row*TILESIZE), tileset[intMap[row][col]], BLOCKED);
+                Tile t = new Tile(posX + (col*TILESIZE), posY + (row*TILESIZE), tileset[intMap[row][col]], intMap[row][col]);
                 tabT[row][col] = t;
             }
         }

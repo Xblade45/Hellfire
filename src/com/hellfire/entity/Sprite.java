@@ -28,20 +28,32 @@ public abstract class Sprite {
     protected Animation animation;
     protected BufferedImage image;
     
-    //constructor
+    // Resources Directory
+    public static final String BACKGROUND = "Backgrounds";
+    public static final String ENNEMY = "Ennemies";
+    public static final String LASER = "Lasers";
+    public static final String SPACESHIP = "Spaceships";
+    public static final String TILEMAP = "TileMap";
+    
+    // constructor
     public Sprite(int x, int y, String sprite, String directory, int nbFrames){
         
         this(x, y);
         this.dx = 0;
         this.dy = 0;
         
-        initImages(sprite, directory, nbFrames);
+        initAnimation(sprite, directory, nbFrames);
+        this.width = animation.getImage().getWidth();
+        this.height = animation.getImage().getHeight();
     }
     
     public Sprite(int x, int y, BufferedImage image){
         
         this(x, y);
         this.image = image;
+
+        this.width = image.getWidth();
+        this.height = image.getHeight();
     }
     
     public Sprite(int x, int y){
@@ -50,29 +62,11 @@ public abstract class Sprite {
         this.posY = y;
     }
     
-    protected void update(){
+    public Sprite(){
         
-        //update position
-        this.posX += dx*speed;
-        this.posY += dy*speed;
     }
-    
-    public Rectangle getBounds(){
-        return new Rectangle(posX, posY, width, height);
-    }
-    
-    private void initImages(String sprite, String directory, int nbFrames){
         
-        animation = new Animation(
-        ImageLoader.getAnimationTab(
-                ImageLoader.load(directory, sprite), nbFrames));
-        animation.start(100);
-
-        this.width = animation.getImage().getWidth();
-        this.height = animation.getImage().getHeight();
-    }
-    
-    //getter
+    // getter
     public int getPosX() {
         return posX;
     }
@@ -88,4 +82,33 @@ public abstract class Sprite {
     public BufferedImage getImage(){
         return image;
     }
+    
+    // setter
+    public void setPosX(int x){
+        this.posX = x;
+    }
+    public void setPosY(int y){
+        this.posY = y;
+    }
+    
+    // Methods
+    protected void update(){
+        
+        //update position
+        this.posX += dx*speed;
+        this.posY += dy*speed;
+    }
+    
+    public Rectangle getBounds(){
+        return new Rectangle(posX, posY, width, height);
+    }
+    
+    private void initAnimation(String sprite, String directory, int nbFrames){
+        
+        animation = new Animation(
+        ImageLoader.getAnimationTab(
+                ImageLoader.load(directory, sprite), nbFrames));
+        animation.start(100);
+    }
+
 }

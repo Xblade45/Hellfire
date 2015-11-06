@@ -5,38 +5,35 @@
  */
 package com.hellfire.level;
 
+import com.hellfire.entity.Sprite;
 import com.hellfire.gamestate.GameEngine;
 import com.hellfire.gamestate.ImageLoader;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 
 /**
  *
  * @author Xblade45
  */
-public class Background implements GameEngine {
-    
-    private BufferedImage image;
-    
-    //Background position
-    private int posX;
-    private int posY;
-    
-    //Vector
-    private int dx;
-    private int dy;
-    
-    //Speed
-    private double scrollSpeed;
+public class Background extends Sprite implements GameEngine {
     
     //Constructor
     public Background(String file, double scrollSpeed){
         
-        this.scrollSpeed = scrollSpeed;
+        super();
         
-        image = ImageLoader.load("Backgrounds", file);
+        this.speed = scrollSpeed;
+        
+        image = ImageLoader.load(BACKGROUND, file);
         
         init();
+    }
+    
+    public Background(String file, double scrollSpeed, int dx, int dy){
+        
+        this(file, scrollSpeed);
+        
+        this.dx = dx;
+        this.dy = dy;
     }
     
     //Accessors
@@ -54,7 +51,7 @@ public class Background implements GameEngine {
         
         this.posX = 0;
         this.posY = 0;
-        this.dx = -1;
+        this.dx = 0;
         this.dy = 0;
     }
 
@@ -64,8 +61,8 @@ public class Background implements GameEngine {
     @Override
     public void update() {
         
-        this.posX += dx*scrollSpeed;
-        this.posY += dy*scrollSpeed;
+        this.posX += dx*speed;
+        this.posY += dy*speed;
     }
 
     @Override

@@ -28,9 +28,9 @@ public class Player extends Spaceship {
     protected static final int DIAG = 3;
     
     
-    public Player(int x, int y, String sprite, String directory){
+    public Player(int x, int y, String sprite){
         
-        super(x, y, sprite, directory);
+        super(x, y, sprite);
         
         init();
     }
