@@ -38,7 +38,7 @@ public class MenuState extends GameState {
     @Override
     public final void init() {
         
-        currentMenuState = STARTMENUSTATE;
+        this.currentMenuState = STARTMENUSTATE;
         
         menuFont = new Font(Font.MONOSPACED, Font.PLAIN, 14);
         background = new Background("background1");
@@ -57,26 +57,16 @@ public class MenuState extends GameState {
         FontMetrics fm = g.getFontMetrics();      
         int centerX = Panel.getP_WIDTH()/2 - fm.stringWidth("start")/2;
         
-        
         // Draw String/Menu
-        if(currentMenuState == STARTMENUSTATE){
-            
-            g.setColor(Color.red);
-            g.drawString("Start", centerX, Panel.getP_HEIGHT()*12/25);
-            g.setColor(Color.white);
-            g.drawString("Quit", centerX, Panel.getP_HEIGHT()*13/25);
-        }else{
-            
-            g.setColor(Color.white);
-            g.drawString("Start", centerX, Panel.getP_HEIGHT()*12/25);
-            g.setColor(Color.red);
-            g.drawString("Quit", centerX, Panel.getP_HEIGHT()*13/25);
-        }  
+        g.setColor(currentMenuState == STARTMENUSTATE? Color.red:Color.white);
+        g.drawString("Start", centerX, Panel.getP_HEIGHT()*12/25);
+        g.setColor(currentMenuState == QUITMENUSTATE? Color.red:Color.white);
+        g.drawString("Quit", centerX, Panel.getP_HEIGHT()*13/25);
     }
 
     @Override
     public void update() {
-
+        
         navigateMenu();
         checkSelection();
     }
@@ -84,7 +74,7 @@ public class MenuState extends GameState {
     private void navigateMenu(){
         if(InputListener.isDownPressed && currentMenuState == STARTMENUSTATE)
             this.currentMenuState = QUITMENUSTATE;
-        else if(InputListener.isDownPressed && currentMenuState == QUITMENUSTATE)
+        else if(InputListener.isUpPressed && currentMenuState == QUITMENUSTATE)
             this.currentMenuState = STARTMENUSTATE;
     }
     

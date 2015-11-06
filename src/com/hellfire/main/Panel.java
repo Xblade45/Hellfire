@@ -33,6 +33,7 @@ public class Panel extends JPanel implements GameEngine, Runnable {
     
     private Thread game;
     
+    
     public Panel(){
     
         init();

@@ -32,7 +32,7 @@ public class GameStateManager implements GameEngine, MouseListener, KeyListener{
     public GameStateManager(){
         
         gameStates = new ArrayList<>();
-        currentState = LEVEL1STATE;
+        currentState = MENUSTATE;
         gameStates.add(new MenuState(this));
         gameStates.add(new Level1State(this));
     }
