@@ -69,7 +69,7 @@ public class Player extends Spaceship {
             laserSelectionCounter = 0;
 
         //Border Detection
-        checkBounds();
+        checkPanelBounds();
     } 
     
     @Override
@@ -107,7 +107,7 @@ public class Player extends Spaceship {
         System.out.println(currentLaserType);
     }
 
-    private void checkBounds() {
+    private void checkPanelBounds() {
 
         if (posX < 0 + BOUNDS_PADDING) {
             posX = 0 + BOUNDS_PADDING;
@@ -126,10 +126,10 @@ public class Player extends Spaceship {
     private void checkInput() {
 
         if (InputListener.isUpPressed) {
-            this.dy = -1;
+            this.dy = -0.85;
         }
         if (InputListener.isDownPressed) {
-            this.dy = 1;
+            this.dy = 0.85;
         }
         if (InputListener.isLeftPressed) {
             this.dx = -0.85;
